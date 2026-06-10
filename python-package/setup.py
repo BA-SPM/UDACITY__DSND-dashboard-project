@@ -6,12 +6,12 @@ requirements = (cwd / 'employee_events' / 'requirements.txt').read_text().split(
 
 setup_args = dict(
     name='employee_events',
-    version='0.0.1',
+    version='0.0.2',
     author='UDACITY - DATA SCIENTIST NANODEGREE PROGRAM | Adaption: Bastian',
     description='SQL Query API',
     packages=find_packages(),
     package_data={'': ['employee_events.db', 'requirements.txt']},
-    install_requirements=requirements,
+    install_requires=requirements,
 )
 
 if __name__ == "__main__":

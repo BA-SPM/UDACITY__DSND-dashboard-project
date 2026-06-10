@@ -1,17 +1,17 @@
 # my package's dependencies
-fastcore==1.13.3
-matplotlib==3.10.9
-numpy==2.4.6
-pandas==3.0.3
-pytest==9.0.3
-python_fasthtml==0.14.2
-scikit_learn==1.9.0
-scipy==1.17.1
+fastcore>=1.13.3
+matplotlib>=3.10.9
+numpy>=2.4.6
+pandas>=3.0.3
+pytest>=9.0.3
+python_fasthtml>=0.14.2
+scikit_learn>=1.9.0
+scipy>=1.17.1
 
 # only used for packaging the python-package in "python-package" directory
-setuptools==82.0.1
+setuptools>=82.0.1
 
 # "old" dependencies in starter "requirments.txt" file
-scikit-learn==1.5.2
+scikit-learn>=1.5.2
 flake8
 ipython
