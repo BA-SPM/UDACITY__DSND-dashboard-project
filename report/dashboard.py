@@ -233,7 +233,7 @@ class Report(CombinedComponent):
 
 # Initialize a fasthtml app 
 #### YOUR CODE HERE
-app = app
+app = App()
 
 # Initialize the `Report` class
 #### YOUR CODE HERE
