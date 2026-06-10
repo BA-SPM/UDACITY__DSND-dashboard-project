@@ -8,6 +8,52 @@ import pandas as pd
 db_path = Path(__file__).resolve().parent / "employee_events.db"
 
 
+# Helper functions for explicit connection management
+def open_connection(path: Path = db_path):
+    """
+    Open and return a sqlite3 connection to the given database path.
+    """
+    return connect(path)
+
+
+def execute_query(sql_query: str, params=None, connection=None, fetchone: bool = False, as_dataframe: bool = False):
+    """
+    Execute `sql_query` using a provided connection or a new connection.
+
+    - If `as_dataframe` is True, returns a pandas DataFrame.
+    - If `fetchone` is True, returns a single row tuple (or None).
+    - Otherwise returns a list of tuples.
+
+    The connection is closed only if this function opened it.
+    """
+    close_conn = False
+    if connection is None:
+        connection = connect(db_path)
+        close_conn = True
+    try:
+        if as_dataframe:
+            return pd.read_sql_query(sql_query, connection, params=params)
+        cursor = connection.cursor()
+        if params is None:
+            cursor.execute(sql_query)
+        else:
+            cursor.execute(sql_query, params)
+        return cursor.fetchone() if fetchone else cursor.fetchall()
+    finally:
+        if close_conn:
+            connection.close()
+
+
+def close_connection(connection):
+    """
+    Close the given sqlite3 connection if it is open. Silently ignores errors.
+    """
+    try:
+        connection.close()
+    except Exception:
+        pass
+
+
 # OPTION 1: MIXIN
 # Define a class called `QueryMixin`
 class QueryMixin:
