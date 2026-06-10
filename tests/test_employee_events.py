@@ -8,8 +8,10 @@ project_root = Path(__file__).resolve().parents[1]
 
 # apply the pytest fixture decorator
 # to a `db_path` function
+
+
 @pytest.fixture
-def db_path():   
+def db_path():
 
     # Using the `project_root` variable
     # return a pathlib object for the `employee_events.db` file
@@ -23,7 +25,7 @@ def db_path():
 # the creates the "fixture" for
 # the database's filepath
 #### YOUR CODE HERE
-    
+
     # using the pathlib `.is_file` method
     # assert that the sqlite database file exists
     # at the location passed to the test_db_exists function
@@ -34,6 +36,7 @@ def db_conn(db_path):
     from sqlite3 import connect
     return connect(db_path)
 
+
 @pytest.fixture
 def table_names(db_conn):
     name_tuples = db_conn.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()
@@ -43,6 +46,8 @@ def table_names(db_conn):
 # `test_employee_table_exists`
 # This function should receive the `table_names`
 # fixture as an argument
+
+
 def test_db_exists(db_path):
     # using the pathlib `.is_file` method
     # assert that the sqlite database file exists
@@ -59,6 +64,8 @@ def test_employee_table_exists(table_names):
 # `test_team_table_exists`
 # This function should receive the `table_names`
 # fixture as an argument
+
+
 def test_team_table_exists(table_names):
     # Assert that the string 'team'
     # is in the table_names list
@@ -68,8 +75,9 @@ def test_team_table_exists(table_names):
 # `test_employee_events_table_exists`
 # This function should receive the `table_names`
 # fixture as an argument
+
+
 def test_employee_events_table_exists(table_names):
     # Assert that the string 'employee_events'
     # is in the table_names list
     assert 'employee_events' in table_names
-

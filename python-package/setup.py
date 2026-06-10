@@ -12,7 +12,7 @@ setup_args = dict(
     packages=find_packages(),
     package_data={'': ['employee_events.db', 'requirements.txt']},
     install_requirements=requirements,
-    )
+)
 
 if __name__ == "__main__":
     setup(**setup_args)

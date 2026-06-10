@@ -2,10 +2,12 @@
 from .query_base import QueryBase
 
 # Import dependencies needed for sql execution
-from .sql_execution import *
+from .sql_execution import QueryMixin
 
 # Define a subclass of QueryBase
 # called Employee
+
+
 class Employee(QueryBase):
     """Employee-specific queries."""
 
@@ -19,10 +21,10 @@ class Employee(QueryBase):
     # from an sql execution
     def names(self):
         """Return list of tuples: (full_name, employee_id) for all employees."""
-      
+
         # Query 3
         # Write an SQL query
-        # that selects two columns 
+        # that selects two columns
         # 1. The employee's full name
         # 2. The employee's id
         # This query should return the data
@@ -31,16 +33,16 @@ class Employee(QueryBase):
         sql = "SELECT first_name || ' ' || last_name AS full_name, employee_id FROM employee;"
 
         return self.query(sql)
-  
 
     # Define a method called `username`
     # that receives an `id` argument
     # This method should return a list of tuples
     # from an sql execution
+
     def username(self, id):
         """Return the full name for the given employee id."""
         # Query 4: SQL to return the full name for a specific employee id
-        
+
         # Query 4
         # Write an SQL query
         # that selects an employees full name
@@ -52,7 +54,6 @@ class Employee(QueryBase):
 
         return self.query(username_sql)
 
-
     # Below is method with an SQL query
     # This SQL query generates the data needed for
     # the machine learning model.
@@ -60,6 +61,7 @@ class Employee(QueryBase):
     # so when it is called, a pandas dataframe
     # is returns containing the execution of
     # the sql query
+
     def model_data(self, id):
         """Execute the provided model SQL and return a pandas DataFrame."""
         query = f"""
@@ -70,9 +72,4 @@ class Employee(QueryBase):
                         USING({self.name}_id)
                     WHERE {self.name}.{self.name}_id = {id}
                 """
-        return self.pandas_query(query)  
-
-
-
-
-
+        return self.pandas_query(query)
