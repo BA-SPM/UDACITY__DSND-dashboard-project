@@ -1,8 +1,19 @@
-from fasthtml.common import *
+from fasthtml.common import fast_app, serve, H1, Div
 import matplotlib.pyplot as plt
+from combined_components import FormGroup, CombinedComponent
+
+# Ensure project root is importable when running this file as a script
+import os
+import sys
+from pathlib import Path
 
 # Import QueryBase, Employee, Team from employee_events
 from employee_events import QueryBase, Employee, Team
+
+# Add the project root (parent of the `report` package) to sys.path
+project_root = Path(__file__).resolve().parents[1]
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 # import the load_model function from the utils.py file
 from report.utils import load_model
@@ -18,8 +29,6 @@ from base_components import (
     MatplotlibViz,
     DataTable
 )
-
-from combined_components import FormGroup, CombinedComponent
 
 
 # Create a subclass of base_components/dropdown
@@ -121,12 +130,17 @@ class BarChart(MatplotlibViz):
     # assign the attribute to the output
     # of the `load_model` utils function
     #### YOUR CODE HERE
-    predictor = load_model()
+    # Defer loading the ML model until visualization is actually called
+    # to avoid importing heavy packages at module import time.
+    predictor = None
 
     # Overwrite the parent class `visualization` method
     # Use the same parameters as the parent
     #### YOUR CODE HERE
     def visualization(self, asset_id, model):
+        # Lazy-load the predictor if it hasn't been loaded yet
+        if self.predictor is None:
+            self.predictor = load_model()
         # Using the model and asset_id arguments
         # pass the `asset_id` to the `.model_data` method
         # to receive the data that can be passed to the machine
@@ -216,11 +230,9 @@ class DashboardFilters(FormGroup):
             name="user-selection")
     ]
 
+
 # Create a subclass of CombinedComponents
 # called `Report`
-#### YOUR CODE HERE
-
-
 class Report(CombinedComponent):
     # Set the `children`
     # class attribute to a list
@@ -239,8 +251,7 @@ class Report(CombinedComponent):
 
 
 # Initialize a fasthtml app
-#### YOUR CODE HERE
-app = App()
+app, rt = fast_app()
 
 # Initialize the `Report` class
 #### YOUR CODE HERE
@@ -271,7 +282,6 @@ def index(r):
 # an ID of `2`.
 # parameterize the employee ID
 # to a string datatype
-#### YOUR CODE HERE
 
 
 @app.get('/employee/{id}')

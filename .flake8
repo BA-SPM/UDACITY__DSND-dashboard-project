@@ -18,6 +18,7 @@ max-line-length = 120
 # W503, # Line break before binary operator (PEP 8 empfiehlt, den Zeilenumbruch nach dem Operator zu setzen)
 # E203, # Whitespace before ':', Konflikt mit Black (PEP 8 erlaubt es, aber Black nicht)
 # E266 # Too many leading '#' for block comment
+# E402 # Module level import not at top of file (manchmal notwendig, z.B. für die Anpassung von sys.path)
 
 ignore =
     F401,
@@ -25,6 +26,7 @@ ignore =
     W503,
     E203,
     E266,
+    E402
 
 # fasthtml generiert Code mit "from module import *", was zu F403 und F405 führt. 
 # Diese Fehler für die betroffenen Dateien ignorieren.
