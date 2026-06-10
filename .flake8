@@ -1,0 +1,41 @@
+[flake8]
+# Ordner ausschließen
+exclude =
+    .venv,
+    __pycache__,
+    .git,
+    build,
+    dist,
+    *.egg-info
+    tests/tmp
+
+# Max. Zeilenlänge anpassen (Default: 79)
+max-line-length = 120
+
+# Bestimmte Regeln ignorieren
+# F401, # Unused imports (mainly in "__init__.py")
+# E501, # Line too long (handled by max-line-length)
+# W503, # Line break before binary operator (PEP 8 empfiehlt, den Zeilenumbruch nach dem Operator zu setzen)
+# E203, # Whitespace before ':', Konflikt mit Black (PEP 8 erlaubt es, aber Black nicht)
+# E266 # Too many leading '#' for block comment
+
+ignore =
+    F401,
+    E501,
+    W503,
+    E203,
+    E266,
+
+# fasthtml generiert Code mit "from module import *", was zu F403 und F405 führt. 
+# Diese Fehler für die betroffenen Dateien ignorieren.
+# F403 # 'from module import *' used; unable to detect undefined names
+# F405 # Name may be undefined, or defined from star imports: module
+per-file-ignores =
+    ./report/dashboard.py: F403, F405
+
+
+# Nur bestimmte Ordner prüfen (alternativ zu exclude)
+# filename = *.py
+
+# Fehler pro Datei begrenzen
+max-complexity = 10
